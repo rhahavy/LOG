@@ -1,0 +1,19 @@
+<h2>Log Your Mood</h2>
+
+<form id="moodForm">
+  <label for="moodScore">Mood (1–10):</label>
+  <input type="range" id="moodScore" name="moodScore" min="1" max="10" value="5" oninput="scoreOutput.value = moodScore.value">
+  <output id="scoreOutput">5</output>
+
+  <br><br>
+
+  <label for="moodComment">Comment:</label><br>
+  <textarea id="moodComment" name="moodComment" rows="3" placeholder="What's on your mind?"></textarea>
+
+  <br><br>
+
+  <button type="submit">Log Mood</button>
+</form>
+
+<h3>Your Mood Logs</h3>
+<ul id="moodLogList"></ul>
