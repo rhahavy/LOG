@@ -1,3 +1,4 @@
+
 const form = document.getElementById("moodForm");
 const logList = document.getElementById("moodLogList");
 
@@ -51,5 +52,13 @@ function displayMoodLogs() {
 });
 
 }
+
+function deleteEntry(id) {
+  let moodLogs = JSON.parse(localStorage.getItem("moodLogs")) || [];
+  moodLogs = moodLogs.filter(entry => entry.id !== id);
+  localStorage.setItem("moodLogs", JSON.stringify(moodLogs));
+  displayMoodLogs();
+}
+
 
 displayMoodLogs();
