@@ -8,11 +8,13 @@ form.addEventListener("submit", function (e) {
   const moodComment = document.getElementById("moodComment").value;
   const timestamp = new Date().toLocaleString();
 
-  const moodEntry = {
-    score: moodScore,
-    comment: moodComment,
-    time: timestamp
-  };
+const moodEntry = {
+  id: Date.now(), // unique ID
+  score: moodScore,
+  comment: moodComment,
+  time: timestamp
+};
+
 
   // Save to localStorage
   let moodLogs = JSON.parse(localStorage.getItem("moodLogs")) || [];
