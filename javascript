@@ -32,10 +32,24 @@ function displayMoodLogs() {
   logList.innerHTML = "";
 
   moodLogs.reverse().forEach((entry) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${entry.time}</strong> — Mood: ${entry.score}/10 <br> ${entry.comment}`;
-    logList.appendChild(li);
-  });
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <strong>${entry.time}</strong><br> 
+    Mood: ${entry.score}/10<br> 
+    ${entry.comment}<br>
+    <button onclick="deleteEntry(${entry.id})" style="
+      margin-top: 8px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    ">🗑️ Delete</button>
+  `;
+  logList.appendChild(li);
+});
+
 }
 
 displayMoodLogs();
