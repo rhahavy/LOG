@@ -1,19 +1,156 @@
-<h2>Log Your Mood</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Mood Log</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(#dcedc1, #a8d5ba);
+      font-family: 'Quicksand', sans-serif;
+      color: #2e4e1c;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
 
-<form id="moodForm">
-  <label for="moodScore">Mood (1–10):</label>
-  <input type="range" id="moodScore" name="moodScore" min="1" max="10" value="5" oninput="scoreOutput.value = moodScore.value">
-  <output id="scoreOutput">5</output>
+    .terrarium-container {
+      background-color: #ffffffdd;
+      border: 5px solid #7fb069;
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+    }
 
-  <br><br>
+    h2, h3 {
+      text-align: center;
+      color: #3d6837;
+    }
 
-  <label for="moodComment">Comment:</label><br>
-  <textarea id="moodComment" name="moodComment" rows="3" placeholder="What's on your mind?"></textarea>
+    label {
+      font-weight: 600;
+      margin-top: 12px;
+      display: block;
+    }
 
-  <br><br>
+    input[type="range"] {
+      width: 100%;
+      margin-top: 5px;
+    }
 
-  <button type="submit">Log Mood</button>
-</form>
+    output {
+      font-weight: bold;
+      color: #386641;
+    }
 
-<h3>Your Mood Logs</h3>
-<ul id="moodLogList"></ul>
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #cce3d4;
+      background-color: #f5fff7;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #9ccc65;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #8cbf4c;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background-color: #eafbe7;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 12px;
+      border-left: 5px solid #b5e48c;
+    }
+
+    strong {
+      color: #3e6b3b;
+    }
+  </style>
+</head>
+<body>
+  <div class="terrarium-container">
+    <h2>🌿 Terrarium Mood Log</h2>
+
+    <form id="moodForm">
+      <label for="moodScore">Mood (1–10):</label>
+      <input type="range" id="moodScore" name="moodScore" min="1" max="10" value="5" oninput="scoreOutput.value = moodScore.value">
+      <output id="scoreOutput">5</output>
+
+      <label for="moodComment">Comment:</label>
+      <textarea id="moodComment" name="moodComment" rows="3" placeholder="What's growing in your world today?"></textarea>
+
+      <button type="submit">🌱 Log Mood</button>
+    </form>
+
+    <h3>🪴 Your Mood Entries</h3>
+    <ul id="moodLogList"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById("moodForm");
+    const logList = document.getElementById("moodLogList");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const moodScore = document.getElementById("moodScore").value;
+      const moodComment = document.getElementById("moodComment").value;
+      const timestamp = new Date().toLocaleString();
+
+      const moodEntry = {
+        score: moodScore,
+        comment: moodComment,
+        time: timestamp
+      };
+
+      let moodLogs = JSON.parse(localStorage.getItem("moodLogs")) || [];
+      moodLogs.push(moodEntry);
+      localStorage.setItem("moodLogs", JSON.stringify(moodLogs));
+
+      displayMoodLogs();
+      form.reset();
+      document.getElementById("scoreOutput").value = 5;
+    });
+
+    function displayMoodLogs() {
+      let moodLogs = JSON.parse(localStorage.getItem("moodLogs")) || [];
+      logList.innerHTML = "";
+
+      moodLogs.reverse().forEach((entry) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${entry.time}</strong><br> Mood: ${entry.score}/10<br>${entry.comment}`;
+        logList.appendChild(li);
+      });
+    }
+
+    displayMoodLogs();
+  </script>
+</body>
+</html>
